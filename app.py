@@ -70,22 +70,56 @@ def aminoacids():
 @app.route("/game", methods=["GET", "POST"])
 def game():
     conn = db_connection()
-
     result = None
 
+    fields = {
+        "Name": "Name",
+        "Letter": "One-letter abbreviation",
+        "Abbr": "Three-letter abbreviation",
+        "Molecular_Formula": "Molecular formula",
+        "property": "property"
+    }
+
+    property_options = ["hydrophobe", "hydrophile", "negative", "positive"]
+
     if request.method == "POST":
+        shown_field = request.form["shown_field"]
+        guess_field = request.form["guess_field"]
         correct_answer = request.form["correct_answer"]
-        user_answer = request.form["user_answer"]
+
+        if guess_field == "property":
+            user_answer = request.form["property_answer"]
+        else:
+            user_answer = request.form["user_answer"]
 
         if user_answer.strip().lower() == correct_answer.strip().lower():
             result = "Correct!"
         else:
             result = f"Wrong. The correct answer was {correct_answer}."
-        
+    
+    else:
+        shown_field = request.args.get("shown_field", "Name")
+        guess_field = request.args.get("guess_field", "Letter")   
+
     aminoacid = conn.execute(
         "SELECT * FROM amino_acids ORDER BY RANDOM() LIMIT 1"
     ).fetchone()
 
+    print(aminoacid.keys())
+
     conn.close()
 
-    return render_template("game.html", aminoacid=aminoacid, result=result)
+    shown_value = aminoacid[shown_field]
+    correct_answer = aminoacid[guess_field]
+
+    return render_template("game.html",
+        aminoacid=aminoacid, 
+        shown_field=shown_field,
+        guess_field=guess_field,
+        shown_label=fields[shown_field],
+        guess_label=fields[guess_field],
+        shown_value=shown_value,
+        correct_answer=correct_answer,
+        property_options=property_options,
+        result=result
+    )

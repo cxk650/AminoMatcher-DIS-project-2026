@@ -11,14 +11,32 @@
         {% endif %}
 
         <form method="POST" action="/game">
-            <p>What is the one-letter abbreviation for {{ aminoacid.Name }}?</p>
+            <p>
+            You are shown the {{ shown_label }}:
+            <strong>{{ shown_value }}</strong>
+            </p>
 
-            <input type="text" name="user_answer" required>
-            <input type="hidden" name="correct_answer" value="{{ aminoacid.Letter }}">
+            <p>What is the {{ guess_label }}?</p>
+
+            {% if guess_field == "property" %}
+                {% for option in property_options %}
+                    <input type="radio" name="property_answer" value="{{ option }}" required>
+                    <label>{{ option }}</label>
+                    <br>
+                {% endfor %}
+            {% else %}
+                <input type="text" name="user_answer" required>
+            {% endif %}
+            
+            <input type="hidden" name="correct_answer" value="{{ correct_answer }}">
+            <input type="hidden" name="shown_field" value="{{ shown_field }}">
+            <input type="hidden" name="guess_field" value="{{ guess_field }}">
 
             <button type="submit">Submit</button>
         </form>
 
-        <a href="/">Back</a>
+        <br>
+
+        <a href="/">Choose another game mode</a>
     </body>
 </html>

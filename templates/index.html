@@ -6,8 +6,32 @@
     <body>
         <h1>Welcome to AminoMatcher</h1>
         
-        <a href="/aminoacids">See amino acids</a>
+        <form method="GET" action="/game">
+            <label>What should be shown?</label>
+            <select name="shown_field">
+                <option value="Name">Name</option>
+                <option value="Letter">One-letter abbreviation</option>
+                <option value="Abbr">Three-letter abbreviation</option>
+                <option value="Molecular_Formula">Molecular formula</option>
+            </select>
+
+            <br><br>
+
+            <label>What should be guessed?</label>
+            <select name="guess_field">
+                <option value="Name">Name</option>
+                <option value="Letter">One-letter abbreviation</option>
+                <option value="Abbr">Three-letter abbreviation</option>
+                <option value="Molecular_Formula">Molecular formula</option>
+                <option value="property">Property</option>
+            </select>
+
+            <br><br>
+
+            <button type="submit">Start game</button>
+        </form>
+
         <br>
-        <a href="/game">Start game</a>
+        <a href="/aminoacids">See amino acids</a>
     </body>
 </html>
