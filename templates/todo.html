@@ -23,17 +23,10 @@
 
     <h1>🧬 AminoMatcher 🧬</h1>
 
-    {% if view == 'welcome' %}
-        <div class="card" style="text-align: center;">
-            <h2>Welcome to AminoMatcher!</h2>
-            <p>Master the amino acids, their abbreviations, structures, and chemical properties through dynamic quizzes.</p>
-            <a href="/setup" class="btn btn-start">Start Game</a>
-        </div>
-
-    {% elif view == 'setup' %}
+    {% if view == 'setup' %}
         <div class="card">
             <h2>Configure Your Game Mode</h2>
-            <form method="POST" action="/setup">
+            <form method="POST" action="/start">
                 <label for="show_column"><strong>1. What should the game show you?</strong></label>
                 <select name="show_column" id="show_column">
                     <option value="name">Amino Acid Name</option>
@@ -51,7 +44,7 @@
                     <option value="name">Amino Acid Name</option>
                     <option value="three_letter_abbr">3-Letter Abbreviation</option>
                     <option value="structure">Molecular Formula</option>
-                    <option value="property">Chemical Property (e.g., hydrophobe, hydrophile)</option>
+                    <option value="property">Chemical Property</option>
                 </select>
 
                 <input type="submit" value="Generate Quiz" class="btn btn-start">
@@ -73,10 +66,10 @@
                 </div>
             {% endif %}
 
-            <form method="POST" action="/game">
-                <input type="hidden" name="correct_answer" value="{{ correct_answer }}">
+            <form method="POST" action="/play-game">
                 <input type="hidden" name="show_column" value="{{ show_column }}">
                 <input type="hidden" name="guess_column" value="{{ guess_column }}">
+                <input type="hidden" name="correct_answer" value="{{ correct_answer }}">
                 <input type="hidden" name="question_target" value="{{ question_target }}">
 
                 {% if guess_column == 'property' %}
@@ -95,7 +88,7 @@
                 <input type="submit" value="Submit Answer" class="btn">
             </form>
             
-            <a href="/setup" style="display: block; text-align: center; margin-top: 15px; color: #666; font-size: 14px;">Change Game Mode</a>
+            <a href="/start" style="display: block; text-align: center; margin-top: 15px; color: #666; font-size: 14px;">Change Game Mode</a>
         </div>
     {% endif %}
 

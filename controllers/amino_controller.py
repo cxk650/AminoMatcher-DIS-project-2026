@@ -1,11 +1,9 @@
 import re
 from flask import Blueprint, render_template, request, redirect, url_for
 from database import db_connection
-from psycopg2.extras import DictCursor
 
 bp = Blueprint('amino', __name__, url_prefix='/')
 
-# Standard English labels for the web interface
 LABELS = {
     'name': 'Amino Acid Name',
     'one_letter_abbr': '1-Letter Abbreviation',
@@ -14,17 +12,14 @@ LABELS = {
     'property': 'Chemical Property'
 }
 
-@bp.route('/')
-def welcome():
-    return render_template('todo.html', view='welcome')
-
-@bp.route('/setup', methods=['GET', 'POST'])
+# 1. NEW WELCOME & SETUP ROUTE
+@bp.route('/start', methods=['GET', 'POST'])
 def setup_game():
     if request.method == 'POST':
         show_col = request.form.get('show_column')
         guess_col = request.form.get('guess_column')
         
-        # SQL INSERT: Create a new GameSession record in PostgreSQL
+        # Create a session in database
         conn = db_connection()
         cur = conn.cursor()
         cur.execute(
@@ -36,14 +31,17 @@ def setup_game():
         cur.close()
         conn.close()
 
+        # Redirect to the brand new game URL
         return redirect(url_for('amino.game', show=show_col, guess=guess_col, session=session_id))
     
+    # Show setup screen directly as the new landing page
     return render_template('todo.html', view='setup')
 
-@bp.route('/game', methods=['GET', 'POST'])
+# 2. NEW GAME ROUTE
+@bp.route('/play-game', methods=['GET', 'POST'])
 def game():
     conn = db_connection()
-    cur = conn.cursor(cursor_factory=DictCursor)
+    cur = conn.cursor()
 
     feedback = None
     
@@ -72,18 +70,25 @@ def game():
             else:
                 feedback = f"Incorrect. The correct answer was '{correct_answer}'."
 
-    # SQL SELECT: Fetch a random amino acid from PostgreSQL
+    # Fetch random amino acid
     cur.execute('SELECT name, three_letter_abbr, one_letter_abbr, structure, property FROM AminoAcids ORDER BY RANDOM() LIMIT 1')
     row = cur.fetchone()
-    
     cur.close()
     conn.close()
 
     if not row:
         return redirect(url_for('amino.setup_game'))
 
-    question_target = row[show_col]
-    correct_answer = row[guess_col]
+    data_map = {
+        'name': row[0],
+        'three_letter_abbr': row[1],
+        'one_letter_abbr': row[2],
+        'structure': row[3],
+        'property': row[4]
+    }
+
+    question_target = data_map.get(show_col, row[0])
+    correct_answer = data_map.get(guess_col, row[2])
 
     return render_template(
         'todo.html',
@@ -93,8 +98,8 @@ def game():
         feedback=feedback,
         show_column=show_col,
         guess_column=guess_col,
-        show_label=LABELS[show_col],
-        guess_label=LABELS[guess_col]
+        show_label=LABELS.get(show_col, 'Question'),
+        guess_label=LABELS.get(guess_col, 'Answer')
     )
 
 @bp.route('/regex-test', methods=['POST'])
@@ -108,4 +113,4 @@ def regex_test():
             match_result = f"No match. The sequence '{sequence}' does NOT match the pattern '{pattern}'."
     except re.error:
         match_result = "Invalid Regex Pattern entered."
-    return f"<h3>Regex Result:</h3> {match_result} <br><br> <a href='/'>Go back to Welcome Screen</a>"
+    return f"<h3>Regex Result:</h3> {match_result} <br><br> <a href='/start'>Go back to Setup Screen</a>"

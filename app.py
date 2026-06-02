@@ -7,10 +7,9 @@ init_db()
 
 app = Flask(__name__)
 
-# The root URL now automatically redirects to our new English welcome screen
+# Automatically redirect the root to our brand new setup route
 @app.route("/")
 def home():
-    return redirect(url_for('amino.welcome'))
+    return redirect(url_for('amino.setup_game'))
 
-# Register our game blueprints
 app.register_blueprint(amino_controller.bp)
