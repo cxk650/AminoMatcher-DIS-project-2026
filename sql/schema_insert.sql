@@ -12,30 +12,30 @@ INSERT INTO Game_modes (Mode_name) VALUES
 ('Match molecular formula');
 
 --Spørgsmål tid, her starter jeg lige med første gamemode; Match one-letter code:
-INSERT INTO Questions (Amino_acid_id, Question_text)
-SELECT Aminoacid_id, 'What is the one-letter code for ' || Name || '?'
+INSERT INTO Questions (Amino_acid_id, Question_text, Correct_answer)
+SELECT Aminoacid_id, 'What is the one-letter code for ' || Name || '?', Letter
 FROM Amino_acids;
-INSERT INTO Questions (Amino_acid_id, Question_text)
-SELECT Aminoacid_id, 'What is the name for this one-letter code aminoacid ' || Letter || '?'
+INSERT INTO Questions (Amino_acid_id, Question_text, Correct_answer)
+SELECT Aminoacid_id, 'What is the name for this one-letter code aminoacid ' || Letter || '?', Name
 FROM Amino_acids;
 
 --Moving on til match the three-letter abbreviation;
-INSERT INTO Questions (Amino_acid_id, Question_text)
-SELECT Aminoacid_id, 'What is the three-letter abbreviation for ' || Name || '?'
+INSERT INTO Questions (Amino_acid_id, Question_text, Correct_answer)
+SELECT Aminoacid_id, 'What is the three-letter abbreviation for ' || Name || '?', Abbr
 FROM Amino_acids;
-INSERT INTO Questions (Amino_acid_id, Question_text)
-SELECT Aminoacid_id, 'What is the name for this three-letter abbreviation aminoacid ' || Abbr || '?'
+INSERT INTO Questions (Amino_acid_id, Question_text, Correct_answer)
+SELECT Aminoacid_id, 'What is the name for this three-letter abbreviation aminoacid ' || Abbr || '?', Name
 FROM Amino_acids;
 
 --Vi hopper til property;
-INSERT INTO Questions (Amino_acid_id, Question_text)
-SELECT Aminoacid_id, 'Is ' || Name || ' hydrophobic, hydrophilic, negative or positive?'
+INSERT INTO Questions (Amino_acid_id, Question_text, Correct_answer)
+SELECT Aminoacid_id, 'Is ' || Name || ' hydrophobic, hydrophilic, negative or positive?', property
 FROM Amino_acids;
 --kan man vende spårgsmålet om på samme måde som de andre?
 
 --Molekylær formula;
-INSERT INTO Questions (Amino_acid_id, Question_text)
-SELECT Aminoacid_id, 'What is the name of the amoniacid with the molecular formula of ' || Molecular_Formula || '?'
+INSERT INTO Questions (Amino_acid_id, Question_text, Correct_answer)
+SELECT Aminoacid_id, 'What is the name of the amino acid with the molecular formula of ' || Molecular_Formula || '?', Name
 FROM Amino_acids;
 --er det for svært at vende den om?
 

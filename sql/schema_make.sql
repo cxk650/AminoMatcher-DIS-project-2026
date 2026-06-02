@@ -45,7 +45,8 @@ CREATE TABLE Game_sessions (
 CREATE TABLE Questions (
     Question_id SERIAL PRIMARY KEY,
     Amino_acid_id INTEGER REFERENCES Amino_acids(Aminoacid_id),
-    Question_text TEXT NOT NULL 
+    Question_text TEXT NOT NULL,
+    Correct_answer VARCHAR(50) NOT NULL
 );
 --Her har vi question id som er primary key, amino acid id som er en integer som hentes fra et andet table, og question text som ikke er tomt
 -- også skal der laves question tekst
