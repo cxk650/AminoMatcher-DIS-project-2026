@@ -4,64 +4,84 @@ from database import db_connection
 
 bp = Blueprint('amino', __name__, url_prefix='/')
 
-# 1. Ruten til selve spillet og aminosyre-oversigten
 @bp.route('/amino', methods=['GET', 'POST'])
 def amino_game():
     conn = db_connection()
     cur = conn.cursor()
 
+    # Find ud af hvilken spiltilstand der er valgt (standard er '1_letter')
+    current_mode = request.args.get('mode', '1_letter')
+    
     feedback = None
-    user_guess = None
 
-    # Hvis brugeren har svaret på et spørgsmål (POST)
+    # HÅNDTERING AF SVAR (POST)
     if request.method == 'POST':
-        user_guess = request.form.get('user_guess', '').strip().upper()
-        correct_answer = request.form.get('correct_answer', '').strip().upper()
+        correct_answer = request.form.get('correct_answer', '').strip().lower()
         
-        # SQL UPDATE/INSERT krav: Her kan du senere gemme scoren i GameSession.
-        # For nu tjekker vi bare svaret direkte
-        if user_guess == correct_answer:
-            feedback = "Rigtigt!"
+        if current_mode == 'egenskab':
+            # Hvis det er egenskaber, kan brugeren have valgt flere krydser, så vi får en liste
+            user_guesses = request.form.getlist('user_guess')
+            # Vi rydder op og sorterer dem, så vi kan sammenligne med databasen
+            user_guesses_clean = ",".join(sorted([g.strip().lower() for g in user_guesses]))
+            
+            # Vi rydder også databasens svar op (hvis der står "hydrophobe, positive")
+            correct_clean = ",".join(sorted([c.strip().lower() for c in correct_answer.split(',') if c.strip()]))
+            
+            if user_guesses_clean == correct_clean:
+                feedback = "Rigtigt! Det matcher præcis aminosyrens egenskaber."
+            else:
+                feedback = f"Forkert! Denne aminosyre er i virkeligheden: {correct_answer}."
         else:
-            feedback = f"Forkert! Det rigtige svar var {correct_answer}."
+            # For tekst-gæt (Navn, 1-letter, 3-letter)
+            user_guess = request.form.get('user_guess', '').strip().lower()
+            if user_guess == correct_answer:
+                feedback = "Rigtigt! Flot gættet."
+            else:
+                feedback = f"Forkert! Det rigtige svar var '{correct_answer}'."
 
-    # SQL SELECT krav: Vi henter en tilfældig aminosyre til det næste spørgsmål
+    # DYNAMISK SQL: Vi trækker en tilfældig aminosyre ud
     cur.execute('SELECT name, three_letter_abbr, one_letter_abbr, structure, property FROM AminoAcids ORDER BY RANDOM() LIMIT 1')
-    current_question = cur.fetchone()
-
-    # Vi henter også alle aminosyrer, så vi kan vise en liste på siden
-    cur.execute('SELECT name, three_letter_abbr, one_letter_abbr FROM AminoAcids ORDER BY name ASC')
-    all_aminos = cur.fetchall()
-
+    row = cur.fetchone()
     cur.close()
     conn.close()
 
-    # Hvis databasen er tom, laver vi et fallback så siden ikke crasher
-    if not current_question:
-        current_question = ('Alanine', 'Ala', 'A', 'CH3', 'Aliphatic')
+    # Opsætning af spørgsmålet alt efter hvilken GameMode der spilles
+    if current_mode == 'navn':
+        mode_title = "Gæt ud fra Navn"
+        question_target = f"Strukturen {row[3]} og forkortelsen {row[1]}" # Vis struktur/3-letter, gæt navn
+        correct_answer = row[0] # Svaret er 'name'
+    elif current_mode == '3_letter':
+        mode_title = "Gæt ud fra 3-Letter Abbreviation"
+        question_target = f"Aminosyren med navnet '{row[0]}'" # Vis navn, gæt 3-letter
+        correct_answer = row[1] # Svaret er 'three_letter_abbr'
+    elif current_mode == 'egenskab':
+        mode_title = "Gæt ud fra Egenskaber (Kryds af)"
+        question_target = f"Aminosyren med navnet '{row[0]}' ({row[1]})" # Vis navn, gæt egenskab
+        correct_answer = row[4] # Svaret er 'property' (f.eks. hydrophobe)
+    else: # standard '1_letter'
+        mode_title = "Gæt ud fra 1-Letter Abbreviation"
+        question_target = f"Strukturen {row[3]} (Navn: {row[0]})" # Vis struktur/navn, gæt 1-letter
+        correct_answer = row[2] # Svaret er 'one_letter_abbr'
 
     return render_template(
         'todo.html', 
-        question_target=current_question[3], # Vi spørger ud fra strukturen (f.eks. CH3) [cite: 2]
-        correct_answer=current_question[2],   # Det rigtige svar er 1-letter abbreviation (f.eks. A) [cite: 5]
+        question_target=question_target,
+        correct_answer=correct_answer,
         feedback=feedback,
-        all_aminos=all_aminos
+        current_mode=current_mode,
+        mode_title=mode_title
     )
 
-# 2. DET OBLIGATORISKE REGEX-KRAV: Rute til at teste sekvenser
+# REGEX SEKVENSTJEKKER (Bliver som den er)
 @bp.route('/regex-test', methods=['POST'])
 def regex_test():
     sequence = request.form.get('sequence', '').upper()
     pattern = request.form.get('pattern', '')
-    
     try:
-        # Udfører Regular Expression matching på aminosyre-sekvensen
         if re.search(pattern, sequence):
             match_result = f"Match fundet! Sekvensen '{sequence}' passer på mønsteret '{pattern}'."
         else:
             match_result = f"Intet match. Sekvensen '{sequence}' passer IKKE på mønsteret '{pattern}'."
     except re.error:
-        match_result = "Ugyldigt Regex-mønster indtastet."
-
-    # Vi sender resultatet tilbage som en simpel besked
+        match_result = "Ugyldigt Regex-mønster."
     return f"<h3>Regex Resultat:</h3> {match_result} <br><br> <a href='/amino'>Gå tilbage til spillet</a>"
