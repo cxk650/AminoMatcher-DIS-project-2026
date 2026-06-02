@@ -1,42 +1,85 @@
 <!doctype html>
 <html>
     <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
         <title>AminoMatcher Game</title>
     </head>
+
     <body>
-        <h1>AminoMatcher</h1>
 
-        {% if result %}
-            <p>{{ result }}</p>
-        {% endif %}
+        <div class="container">
 
-        <form method="POST" action="/game">
-            <p>
-            You are shown the {{ shown_label }}:
-            <strong>{{ shown_value }}</strong>
-            </p>
+            <h1>AminoMatcher</h1>
 
-            <p>What is the {{ guess_label }}?</p>
-
-            {% if guess_field == "property" %}
-                {% for option in property_options %}
-                    <input type="radio" name="property_answer" value="{{ option }}" required>
-                    <label>{{ option }}</label>
-                    <br>
-                {% endfor %}
-            {% else %}
-                <input type="text" name="user_answer" required>
+            {% if result %}
+                <p class="result">{{ result }}</p>
             {% endif %}
-            
-            <input type="hidden" name="correct_answer" value="{{ correct_answer }}">
-            <input type="hidden" name="shown_field" value="{{ shown_field }}">
-            <input type="hidden" name="guess_field" value="{{ guess_field }}">
 
-            <button type="submit">Submit</button>
-        </form>
+            <form method="POST" action="/game">
 
-        <br>
+                <p>
+                    You are shown the {{ shown_label }}:
+                </p>
 
-        <a href="/">Choose another game mode</a>
+                {% if show_structure %}
+
+                    <img
+                        class="structure-image"
+                        src="{{ url_for('static', filename='images/aminoacids/' ~ shown_value ~ '.png') }}"
+                        alt="{{ shown_value }}">
+                {% else %}
+                    <div class="quiz-value">
+                        {{ shown_value }}
+                    </div>
+
+                {% endif %}
+
+                <p>
+                    What is the {{ guess_label }}?
+                </p>
+
+                {% if guess_field == "property" %}
+
+                    {% for option in property_options %}
+                        <div class="radio-option">
+                            <input
+                                type="radio"
+                                name="property_answer"
+                                value="{{ option }}"
+                                required>
+
+                            <label>{{ option }}</label>
+                        </div>
+                    {% endfor %}
+
+                {% else %}
+
+                    <input
+                        type="text"
+                        name="user_answer"
+                        required>
+
+                {% endif %}
+
+                <input type="hidden" name="correct_answer" value="{{ correct_answer }}">
+                <input type="hidden" name="shown_field" value="{{ shown_field }}">
+                <input type="hidden" name="guess_field" value="{{ guess_field }}">
+
+                <br><br>
+
+                <button type="submit">
+                    Submit
+                </button>
+
+            </form>
+
+            <br>
+
+            <a href="/">
+                Choose another game mode
+            </a>
+
+        </div>
+
     </body>
 </html>

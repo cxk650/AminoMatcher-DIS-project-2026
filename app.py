@@ -77,6 +77,7 @@ def game():
         "Letter": "One-letter abbreviation",
         "Abbr": "Three-letter abbreviation",
         "Molecular_Formula": "Molecular formula",
+        "Structure": "Structure",
         "property": "property"
     }
 
@@ -95,8 +96,8 @@ def game():
         if user_answer.strip().lower() == correct_answer.strip().lower():
             result = "Correct!"
         else:
-            result = f"Wrong. The correct answer was {correct_answer}."
-    
+            result = f"Wrong. The correct answer was {correct_answer}."  
+
     else:
         shown_field = request.args.get("shown_field", "Name")
         guess_field = request.args.get("guess_field", "Letter")   
@@ -105,11 +106,18 @@ def game():
         "SELECT * FROM amino_acids ORDER BY RANDOM() LIMIT 1"
     ).fetchone()
 
-    print(aminoacid.keys())
-
     conn.close()
 
-    shown_value = aminoacid[shown_field]
+    shown_field = shown_field.strip()
+    guess_field = guess_field.strip() 
+
+    show_structure = (shown_field == "Structure")
+
+    if show_structure:
+        shown_value = aminoacid["Name"]
+    else:
+        shown_value = aminoacid[shown_field]
+
     correct_answer = aminoacid[guess_field]
 
     return render_template("game.html",
@@ -121,5 +129,6 @@ def game():
         shown_value=shown_value,
         correct_answer=correct_answer,
         property_options=property_options,
-        result=result
+        result=result,
+        show_structure=show_structure
     )

@@ -1,19 +1,51 @@
 <!doctype html>
 <html>
     <head>
-        <title>Amino acids</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <title>Amino Acids</title>
     </head>
+
     <body>
-        <h1>Amino acids</h1>
 
-        {% for aa in aminoacids %}
-            <p>
-                <strong>{{ aa.Name }}</strong>
-                ({{ aa.Abbr }}, {{ aa.Letter }}) -
-                {{ aa.property }}
+        <div class="container">
+
+            <h1>Amino Acids</h1>
+
+            <p class="subtitle">
+                Browse all amino acids in the database
             </p>
-        {% endfor %}
 
-        <a href="/">Back</a>
+            {% for aa in aminoacids %}
+
+                <div class="amino-card">
+
+                    <h3>{{ aa.Name }}</h3>
+
+                    <p>
+                        <strong>3-letter:</strong> {{ aa.Abbr }}
+                    </p>
+
+                    <p>
+                        <strong>1-letter:</strong> {{ aa.Letter }}
+                    </p>
+
+                    <p>
+                        <strong>Property:</strong> {{ aa.property }}
+                    </p>
+
+                    <p>
+                        <strong>Formula:</strong> {{ aa.Molecular_Formula }}
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+            <a href="/" class="btn">
+                Back
+            </a>
+
+        </div>
+
     </body>
 </html>

@@ -1,37 +1,55 @@
 <!doctype html>
 <html>
     <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
         <title>AminoMatcher</title>
     </head>
+
     <body>
-        <h1>Welcome to AminoMatcher</h1>
-        
-        <form method="GET" action="/game">
-            <label>What should be shown?</label>
-            <select name="shown_field">
-                <option value="Name">Name</option>
-                <option value="Letter">One-letter abbreviation</option>
-                <option value="Abbr">Three-letter abbreviation</option>
-                <option value="Molecular_Formula">Molecular formula</option>
-            </select>
 
-            <br><br>
+        <div class="container">
 
-            <label>What should be guessed?</label>
-            <select name="guess_field">
-                <option value="Name">Name</option>
-                <option value="Letter">One-letter abbreviation</option>
-                <option value="Abbr">Three-letter abbreviation</option>
-                <option value="Molecular_Formula">Molecular formula</option>
-                <option value="property">Property</option>
-            </select>
+            <h1>🧬 AminoMatcher 🧬</h1>
 
-            <br><br>
+            <p class="subtitle">
+                Practice amino acids in a fun way
+            </p>
 
-            <button type="submit">Start game</button>
-        </form>
+            <form method="GET" action="/game">
 
-        <br>
-        <a href="/aminoacids">See amino acids</a>
+                <label>What should be shown?</label>
+
+                <select name="shown_field">
+                    <option value="Name">Name</option>
+                    <option value="Letter">One-letter abbreviation</option>
+                    <option value="Abbr">Three-letter abbreviation</option>
+                    <option value="Molecular_Formula">Molecular formula</option>
+                    <option value="Structure">Structure</option>
+                </select>
+
+                <br><br>
+
+                <label>What should be guessed?</label>
+
+                <select name="guess_field">
+                    <option value="Name">Name</option>
+                    <option value="Letter">One-letter abbreviation</option>
+                    <option value="Abbr">Three-letter abbreviation</option>
+                    <option value="Molecular_Formula">Molecular formula</option>
+                    <option value="property">Property</option>
+                </select>
+
+                <br><br>
+
+                <button type="submit">Start game</button>
+
+            </form>
+
+            <br>
+
+            <a href="/aminoacids">See amino acids</a>
+
+        </div>
+
     </body>
 </html>
