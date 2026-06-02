@@ -10,3 +10,5 @@ INSERT INTO Game_modes (Mode_name) VALUES
 ('Match three-letter abbreviation'),
 ('Match property (hydrophobe/hydrophile)'),
 ('Match molecular formula');
+
+
