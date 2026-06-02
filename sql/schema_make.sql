@@ -13,8 +13,9 @@ CREATE TABLE Amino_acids (
     Aminoacid_id SERIAL PRIMARY KEY,
     Name VARCHAR(50) NOT NULL,
     Abbr VARCHAR(3) NOT NULL,
-    Letter CHAR(1) NOT NULL,
-    property VARCHAR(50)
+    Letter VARCHAR(1) NOT NULL,
+    Molecular_Formula VARCHAR(50) NOT NULL,
+    property VARCHAR(50) NOT NULL
 );
 -- Her bruger vi kommando "CREATE TABLE" og giver det navnet "Amonio_acids" og indsætter diverse attributes fra vores E/R diagram.
 -- Vi bruger kommandoen "SERIAL" og "PRIMARY KEY" for at angive, at vores primær nøgle XXXX
@@ -32,8 +33,9 @@ CREATE TABLE Game_modes (
 -- 3. GameSession (har fremmednøgle til GameMode)
 CREATE TABLE Game_sessions (
     Session_id SERIAL PRIMARY KEY,
-    Mode_id INTEGER REFERENCES Game_modes(Mode_id),
-    Score INTEGER DEFAULT 0 --Man skal vel starte med en score på 0 hvis vu stadig har den med 
+    Amount_question INTEGER NOT NULL,
+    Mode_id INTEGER REFERENCES Game_modes(Mode_id), --Foreign key fordi vi henter den fra en ande
+    Score INTEGER DEFAULT 0 --Man skal vel starte med en score på 0 hvis vi stadig har den med 
 );
 -- Her laver vi vores game session, hvor vi har session_id som primary key
 -- Vi har mode_id som er en integer og den hentes jo fra et andet table, derfor bruger vi "REFERENCES", navnet på den table vi henter fra
