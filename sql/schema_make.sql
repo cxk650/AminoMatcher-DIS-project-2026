@@ -12,9 +12,9 @@
 CREATE TABLE Amino_acids (
     Aminoacid_id SERIAL PRIMARY KEY,
     Name VARCHAR(50) NOT NULL,
-    One_letter CHAR(1) NOT NULL,
-    Three_letter VARCHAR(3) NOT NULL,
-    Property VARCHAR(50)
+    Abbr VARCHAR(3) NOT NULL,
+    Letter CHAR(1) NOT NULL,
+    property VARCHAR(50)
 );
 -- Her bruger vi kommando "CREATE TABLE" og giver det navnet "Amonio_acids" og indsætter diverse attributes fra vores E/R diagram.
 -- Vi bruger kommandoen "SERIAL" og "PRIMARY KEY" for at angive, at vores primær nøgle XXXX
@@ -39,8 +39,18 @@ CREATE TABLE Game_sessions (
 -- Vi har mode_id som er en integer og den hentes jo fra et andet table, derfor bruger vi "REFERENCES", navnet på den table vi henter fra
 -- og til sidst specifikt hvilken kolonne/attribute vi gerne vil have hentet fra vores andet table
 
--- Forbindelsestabel mellem GameSession og Question
+-- 4. Tabel for spørgsmål 
 CREATE TABLE Questions (
+    Question_id SERIAL PRIMARY KEY,
+    Amino_acid_id INTEGER REFERENCES Amino_acids(Aminoacid_id),
+    Question_text TEXT NOT NULL 
+);
+--Her har vi question id som er primary key, amino acid id som er en integer som hentes fra et andet table, og question text som ikke er tomt
+-- også skal der laves question tekst
+
+
+-- Forbindelsestabel mellem GameSession og Question
+CREATE TABLE Session_Questions (
     Session_id INTEGER REFERENCES Game_sessions(Session_id),
     Question_id INTEGER REFERENCES Questions(Question_id),
     User_answer VARCHAR(50),   -- hvad brugeren svarede
