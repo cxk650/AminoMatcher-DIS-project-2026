@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>AminoMatcher Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            text-align: center;
+        }
+        .option-btn {
+            display: block;
+            width: 200px;
+            margin: 10px auto;
+            padding: 12px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>AminoMatcher Quiz</h1>
+
+    <h2>Which amino acid is this:</h2>
+    <h1>{{ correct[0] }}</h1>
+
+    <form action="/answer" method="POST">
+        {% for opt in options %}
+            <button class="option-btn" name="choice" value="{{ opt }}">
+                {{ opt }}
+            </button>
+        {% endfor %}
+        <input type="hidden" name="correct" value="{{ correct[1] }}">
+    </form>
+
+</body>
+</html>
