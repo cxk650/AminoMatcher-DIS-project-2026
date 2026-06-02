@@ -1,15 +1,16 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 from database import init_db
 from controllers import amino_controller
 
-# Byg databasen med jeres aminosyre-tabeller
+# Initialize PostgreSQL database schema and load CSV
 init_db()
 
 app = Flask(__name__)
 
+# The root URL now automatically redirects to our new English welcome screen
 @app.route("/")
-def hello_world():
-    return "<p>Hello, World! AminoMatcher-databasen kører på PostgreSQL.</p>"
+def home():
+    return redirect(url_for('amino.welcome'))
 
-# Registrer jeres nye aminosyre-spil og regex-ruter
+# Register our game blueprints
 app.register_blueprint(amino_controller.bp)

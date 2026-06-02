@@ -1,78 +1,111 @@
 <!doctype html>
-<html lang="da">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AminoMatcher - Vælg Spil</title>
+    <title>AminoMatcher</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; color: #333; }
-        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 600px; margin-bottom: 20px; }
-        .btn { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; }
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; color: #333; text-align: center; }
+        .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 600px; margin: 20px auto; text-align: left; }
+        .btn { background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; display: block; width: 100%; text-align: center; margin-top: 15px; text-decoration: none;}
         .btn:hover { background-color: #45a049; }
-        .btn-menu { background-color: #008CBA; margin-right: 5px; }
-        .btn-menu:hover { background-color: #007B9A; }
-        input[type="text"] { width: 80%; padding: 8px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; }
-        .alert { padding: 10px; margin-bottom: 15px; border-radius: 4px; font-weight: bold; }
+        .btn-start { background-color: #008CBA; font-size: 18px; font-weight: bold; }
+        .btn-start:hover { background-color: #007B9A; }
+        input[type="text"] { width: 95%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; }
+        .alert { padding: 12px; margin-bottom: 15px; border-radius: 4px; font-weight: bold; }
         .success { background-color: #d4edda; color: #155724; }
         .danger { background-color: #f8d7da; color: #721c24; }
-        .options-group { margin: 15px 0; }
-        .checkbox-label { margin-right: 15px; font-size: 16px; cursor: pointer; }
+        select { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; }
+        .checkbox-group { margin: 15px 0; }
+        .checkbox-label { display: block; margin: 8px 0; font-size: 16px; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <h1>🧬 AminoMatcher 🧬</h1>
 
-    <div class="card">
-        <h3>Vælg spiltilstand:</h3>
-        <form method="GET" action="/amino" style="display: inline;">
-            <button type="submit" name="mode" value="navn" class="btn btn-menu">Gæt ud fra Navn</button>
-            <button type="submit" name="mode" value="1_letter" class="btn btn-menu">Gæt ud fra 1-Letter</button>
-            <button type="submit" name="mode" value="3_letter" class="btn btn-menu">Gæt ud fra 3-Letter</button>
-            <button type="submit" name="mode" value="egenskab" class="btn btn-menu">Gæt ud fra Egenskaber</button>
-        </form>
-        <p style="margin-top: 10px; font-style: italic; color: #666;">
-            Aktiv tilstand: <strong>{{ mode_title }}</strong>
-        </p>
-    </div>
+    {% if view == 'welcome' %}
+        <div class="card" style="text-align: center;">
+            <h2>Welcome to AminoMatcher!</h2>
+            <p>Master the amino acids, their abbreviations, structures, and chemical properties through dynamic quizzes.</p>
+            <a href="/setup" class="btn btn-start">Start Game</a>
+        </div>
 
-    <div class="card">
-        <h3>Spørgsmål:</h3>
-        <p>Hvilken aminosyre matcher følgende: <strong style="font-size: 20px; color: #008CBA;">{{ question_target }}</strong>?</p>
+    {% elif view == 'setup' %}
+        <div class="card">
+            <h2>Configure Your Game Mode</h2>
+            <form method="POST" action="/setup">
+                <label for="show_column"><strong>1. What should the game show you?</strong></label>
+                <select name="show_column" id="show_column">
+                    <option value="name">Amino Acid Name</option>
+                    <option value="one_letter_abbr">1-Letter Abbreviation</option>
+                    <option value="three_letter_abbr">3-Letter Abbreviation</option>
+                    <option value="structure">Molecular Formula</option>
+                    <option value="property">Chemical Property</option>
+                </select>
 
-        {% if feedback %}
-            <div class="alert {{ 'success' if 'Rigtigt' in feedback else 'danger' }}">
-                {{ feedback }}
-            </div>
-        {% endif %}
+                <br><br>
 
-        <form method="POST" action="/amino?mode={{ current_mode }}">
-            <input type="hidden" name="correct_answer" value="{{ correct_answer }}">
-            
-            {% if current_mode == 'egenskab' %}
-                <div class="options-group">
-                    <p>Sæt kryds ved de rigtige egenskaber (du kan vælge flere):</p>
-                    <label class="checkbox-label"><input type="checkbox" name="user_guess" value="hydrophobe"> Hydrofob</label>
-                    <label class="checkbox-label"><input type="checkbox" name="user_guess" value="hydrofile"> Hydrofil</label>
-                    <label class="checkbox-label"><input type="checkbox" name="user_guess" value="positive"> Positiv</label>
-                    <label class="checkbox-label"><input type="checkbox" name="user_guess" value="negative"> Negativ</label>
+                <label for="guess_column"><strong>2. What do you want to guess?</strong></label>
+                <select name="guess_column" id="guess_column">
+                    <option value="one_letter_abbr">1-Letter Abbreviation</option>
+                    <option value="name">Amino Acid Name</option>
+                    <option value="three_letter_abbr">3-Letter Abbreviation</option>
+                    <option value="structure">Molecular Formula</option>
+                    <option value="property">Chemical Property (e.g., hydrophobe, hydrophile)</option>
+                </select>
+
+                <input type="submit" value="Generate Quiz" class="btn btn-start">
+            </form>
+        </div>
+
+    {% elif view == 'quiz' %}
+        <div class="card">
+            <p style="float: right; font-weight: bold; color: #666;">Mode: {{ show_label }} → {{ guess_label }}</p>
+            <h2>Question:</h2>
+            <p>Identify the amino acid that matches the following <strong>{{ show_label }}</strong>:</p>
+            <p style="font-size: 24px; color: #008CBA; font-weight: bold; background: #eef7f9; padding: 15px; border-radius: 4px; text-align: center;">
+                {{ question_target }}
+            </p>
+
+            {% if feedback %}
+                <div class="alert {{ 'success' if 'Correct' in feedback else 'danger' }}">
+                    {{ feedback }}
                 </div>
-            {% else %}
-                <label for="user_guess">Skriv dit svar her:</label><br>
-                <input type="text" id="user_guess" name="user_guess" placeholder="Dit gæt..." required autocomplete="off">
             {% endif %}
+
+            <form method="POST" action="/game">
+                <input type="hidden" name="correct_answer" value="{{ correct_answer }}">
+                <input type="hidden" name="show_column" value="{{ show_column }}">
+                <input type="hidden" name="guess_column" value="{{ guess_column }}">
+                <input type="hidden" name="question_target" value="{{ question_target }}">
+
+                {% if guess_column == 'property' %}
+                    <div class="checkbox-group">
+                        <p>Select the correct chemical property:</p>
+                        <label class="checkbox-label"><input type="checkbox" name="user_guess" value="hydrophobe"> Hydrophobic</label>
+                        <label class="checkbox-label"><input type="checkbox" name="user_guess" value="hydrofile"> Hydrophilic</label>
+                        <label class="checkbox-label"><input type="checkbox" name="user_guess" value="positive"> Positive Charge</label>
+                        <label class="checkbox-label"><input type="checkbox" name="user_guess" value="negative"> Negative Charge</label>
+                    </div>
+                {% else %}
+                    <label for="user_guess">Your Answer:</label>
+                    <input type="text" id="user_guess" name="user_guess" placeholder="Type your answer here..." required autocomplete="off">
+                {% endif %}
+
+                <input type="submit" value="Submit Answer" class="btn">
+            </form>
             
-            <br><br>
-            <input type="submit" value="Tjek svar" class="btn">
-        </form>
-    </div>
+            <a href="/setup" style="display: block; text-align: center; margin-top: 15px; color: #666; font-size: 14px;">Change Game Mode</a>
+        </div>
+    {% endif %}
 
     <div class="card">
-        <h3>KRAV: Regex Sekvens-Tjekker</h3>
-        <p>Test om en aminosyre-sekvens matcher et Regex-mønster:</p>
+        <h3>KRAV: Regex Sequence Checker</h3>
+        <p>Test if an amino acid sequence matches a Regular Expression pattern:</p>
         <form method="POST" action="/regex-test">
-            <input type="text" name="sequence" placeholder="F.eks. AAGGG" required><br>
-            <input type="text" name="pattern" placeholder="F.eks. ^A+G+$" required><br>
-            <input type="submit" value="Test Regex" class="btn">
+            <input type="text" name="sequence" placeholder="e.g., AAGGG" required><br>
+            <input type="text" name="pattern" placeholder="e.g., ^A+G+$" required><br>
+            <input type="submit" value="Test Regex Pattern" class="btn" style="background-color: #555;">
         </form>
     </div>
 

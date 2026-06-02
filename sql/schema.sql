@@ -28,3 +28,6 @@ CREATE TABLE IF NOT EXISTS Question (
     FOREIGN KEY (aminoacid_id) REFERENCES AminoAcids(aminoacid_id),
     FOREIGN KEY (session_id) REFERENCES GameSession(session_id)
 );
+
+
+
