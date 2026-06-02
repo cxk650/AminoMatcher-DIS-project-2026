@@ -1,11 +1,61 @@
 <!doctype html>
-<title>Todo:</title>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>AminoMatcher - Spil</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 500px; }
+        .btn { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        .btn:hover { background-color: #45a049; }
+        input[type="text"] { width: 80%; padding: 8px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; }
+        .alert { padding: 10px; margin-bottom: 15px; border-radius: 4px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .danger { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
 
-<form method="POST" action="/todo">
-    <input type="text" name="new_todo" placeholder="Add another todo here" class="form-input" required>
-    <input type="submit" value="Add" class="btn">
-</form>
+    <h1>Velkommen til AminoMatcher!</h1>
 
-{% for todo in todos %}
-    <li><a>{{ todo }}</a></li>
-{% endfor %}
+    <div class="card">
+        <h3>Spørgsmål:</h3>
+        <p>Hvilken aminosyre har strukturen eller egenskaben: <strong>{{ question_target }}</strong>?</p>
+
+        {% if feedback %}
+            <div class="alert {{ 'success' if 'Rigtigt' in feedback else 'danger' }}">
+                {{ feedback }}
+            </div>
+        {% endif %}
+
+        <form method="POST" action="/amino">
+            <input type="hidden" name="correct_answer" value="{{ correct_answer }}">
+            <label for="user_guess">Indtast 1-letter abbreviation (f.eks. A eller G):</label><br>
+            <input type="text" id="user_guess" name="user_guess" placeholder="Dit gæt..." required autocomplete="off">
+            <br><br>
+            <input type="submit" value="Tjek svar" class="btn">
+        </form>
+    </div>
+
+    <br>
+    <div class="card">
+        <h3>Aminosyrer i systemet lige nu:</h3>
+        <ul>
+        {% for am in all_aminos %}
+            <li>{{ am['name'] }} ({{ am['three_letter_abbr'] }} / {{ am['one_letter_abbr'] }})</li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <br>
+    <hr>
+    <h3>KRAV: Regex Sekvens-Tjekker</h3>
+    <p>Test om en aminosyre-sekvens (f.eks. <code>AAGGG</code>) matcher et Regex-mønster (f.eks. <code>^A+G+$</code>):</p>
+    <form method="POST" action="/regex-test">
+        <input type="text" name="sequence" placeholder="F.eks. AAGGG" required><br>
+        <input type="text" name="pattern" placeholder="F.eks. ^A+G+$" required><br>
+        <input type="submit" value="Test Regex" class="btn">
+    </form>
+
+</body>
+</html>
