@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Amino acids</title>
+    </head>
+    <body>
+        <h1>Amino acids</h1>
+
+        {% for aa in aminoacids %}
+            <p>
+                <strong>{{ aa.Name }}</strong>
+                ({{ aa.Abbr }}, {{ aa.Letter }}) -
+                {{ aa.property }}
+            </p>
+        {% endfor %}
+
+        <a href="/">Back</a>
+    </body>
+</html>

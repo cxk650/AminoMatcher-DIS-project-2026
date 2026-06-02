@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+    <head>
+        <title>AminoMatcher Game</title>
+    </head>
+    <body>
+        <h1>AminoMatcher</h1>
+
+        {% if result %}
+            <p>{{ result }}</p>
+        {% endif %}
+
+        <form method="POST" action="/game">
+            <p>What is the one-letter abbreviation for {{ aminoacid.Name }}?</p>
+
+            <input type="text" name="user_answer" required>
+            <input type="hidden" name="correct_answer" value="{{ aminoacid.Letter }}">
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <a href="/">Back</a>
+    </body>
+</html>
