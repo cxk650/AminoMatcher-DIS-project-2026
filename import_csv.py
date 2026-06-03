@@ -13,14 +13,15 @@ with open('aminoacids.csv', newline='', encoding='utf-8-sig') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
         cur.execute("""
-            INSERT INTO aminoacid (name, one_letter_abbr, three_letter_abbr, molecular_formula, property)
-            VALUES (%s, %s, %s, %s, %s)
+            INSERT INTO aminoacid (name, one_letter_abbr, three_letter_abbr, molecular_formula, property, image_filename)
+            VALUES (%s, %s, %s, %s, %s, %s)
         """, (
             row['Name'],
             row['Letter'],
             row['Abbr'],
             row['Molecular Formula'],
-            row['property']  # eller 'property' afhængigt af din CSV
+            row['property'],  # eller 'property' afhængigt af din CSV
+            row['image_filename']
         ))
 
 conn.commit()

@@ -36,7 +36,7 @@ footer {
 /* --- MAIN CONTAINER --- */
 
 .container {
-    max-width: 600px;
+    max-width: 1000px;
     margin: 40px auto;
     background: white;
     padding: 30px;
@@ -154,24 +154,25 @@ input[type="text"]:focus {
     margin-bottom: 20px;
 }
 
+/* --- TABEL LAYOUT --- */
 .amino-table {
     width: 100%;
+    max-width: 950px;   /* bredere så alt kan stå på én linje */
+    margin: 0 auto;
     border-collapse: collapse;
-    margin-top: 20px;
+    font-size: 14px;
 }
 
-.amino-table th {
-    background: #0b7a75;
-    color: white;
-    padding: 12px;
-    text-align: left;
-}
-
+/* --- CELLESTYLING --- */
+.amino-table th,
 .amino-table td {
-    padding: 10px;
-    border-bottom: 1px solid #d9e7e6;
+    padding: 6px 8px;
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;   /* vigtig: forhindrer linjeskift */
 }
 
+/* --- ZEBRA STRIPES + HOVER --- */
 .amino-table tr:nth-child(even) {
     background: #f4fbfa;
 }
@@ -180,6 +181,51 @@ input[type="text"]:focus {
     background: #e6faf7;
 }
 
+/* --- BILLEDER --- */
+.amino-img {
+    width: 14px;      /* mindre billeder = mere plads til tekst */
+    height: 14px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
+
+/* --- KORREKT KOLONNEBREDDER --- */
+/* Kolonne 1 = Name */
+.amino-table th:nth-child(1),
+.amino-table td:nth-child(1) {
+    width: 180px;   /* lidt bredere så navne ikke brydes */
+}
+
+/* Kolonne 2 + 3 = 1-letter og 3-letter */
+.amino-table th:nth-child(2),
+.amino-table td:nth-child(2),
+.amino-table th:nth-child(3),
+.amino-table td:nth-child(3) {
+    width: 70px;    /* nok plads til overskrifterne */
+    text-align: center;
+}
+
+/* Kolonne 4 = Image */
+.amino-table th:nth-child(4),
+.amino-table td:nth-child(4) {
+    width: 35px;
+    text-align: center;
+}
+
+/* Kolonne 5 = Molecular formula */
+.amino-table th:nth-child(5),
+.amino-table td:nth-child(5) {
+    width: 130px;
+}
+
+/* Kolonne 6 = Property */
+.amino-table th:nth-child(6),
+.amino-table td:nth-child(6) {
+    width: 110px;
+}
+
+/* --- FEEDBACK FARVER --- */
 .correct {
     color: #0b7a75;
 }

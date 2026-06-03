@@ -12,22 +12,57 @@
 
 <form action="/answer" method="POST">
 
-    {% if options %}
-        {# --- MULTIPLE CHOICE MODE --- #}
+    {# --------------------------------------------------------- #}
+    {# --- TYPE 1: TEXT → MULTIPLE CHOICE ---------------------- #}
+    {# --------------------------------------------------------- #}
+    {% if question_type == "text_mc" %}
         {% for opt in options %}
             <button class="btn" name="choice" value="{{ opt }}">
                 {{ opt }}
             </button>
         {% endfor %}
+    {% endif %}
 
-    {% else %}
-        {# --- FREE INPUT MODE --- #}
+
+    {# --------------------------------------------------------- #}
+    {# --- TYPE 2: TEXT → FREE INPUT --------------------------- #}
+    {# --------------------------------------------------------- #}
+    {% if question_type == "text_input" %}
         <input class="input-field" type="text" name="choice" placeholder="Type your answer">
         <br>
         <button class="btn" type="submit">Submit</button>
     {% endif %}
 
+
+    {# --------------------------------------------------------- #}
+    {# --- TYPE 3: IMAGE → MULTIPLE CHOICE --------------------- #}
+    {# --------------------------------------------------------- #}
+    {% if question_type == "image_mc" %}
+        <img src="/static/images/aminoacids/{{ image }}" class="quiz-img">
+
+        {% for opt in options %}
+            <button class="btn" name="choice" value="{{ opt }}">
+                {{ opt }}
+            </button>
+        {% endfor %}
+    {% endif %}
+
+
+    {# --------------------------------------------------------- #}
+    {# --- TYPE 4: IMAGE → MOLECULAR FORMULA INPUT ------------- #}
+    {# --------------------------------------------------------- #}
+    {% if question_type == "image_formula" %}
+        <img src="/static/images/aminoacids/{{ image }}" class="quiz-img">
+
+        <input class="input-field" type="text" name="choice" placeholder="fx C3H7NO2">
+        <br>
+        <button class="btn" type="submit">Submit</button>
+    {% endif %}
+
+
+    {# Hidden correct answer #}
     <input type="hidden" name="correct" value="{{ correct_answer }}">
+
 </form>
 
 <div class="score-box">

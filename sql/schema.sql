@@ -22,6 +22,7 @@ CREATE TABLE aminoacid (
     molecular_formula VARCHAR(100) NOT NULL,
     property VARCHAR(100)
 );
+ALTER TABLE aminoacid ADD COLUMN image_filename TEXT;
 
 -- 3) Question
 CREATE TABLE question (
@@ -56,3 +57,5 @@ CREATE TABLE gamesession (
         REFERENCES gamemode(mode_id)
         ON DELETE RESTRICT
 );
+
+SELECT * From aminoacid LIMIT 5;
