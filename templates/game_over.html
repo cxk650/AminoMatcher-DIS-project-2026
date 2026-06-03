@@ -1,48 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Game Over</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 40px auto;
-            text-align: center;
-        }
-        .btn {
-            display: block;
-            width: 250px;
-            margin: 15px auto;
-            padding: 14px;
-            font-size: 18px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-        }
-        .btn-secondary {
-            background-color: #555;
-        }
-        .btn-start {
-            background-color: #2196F3;
-        }
-    </style>
-</head>
-<body>
+{% extends "base.html" %}
 
-    <h1>Game Over</h1>
-    <h2>Your score: {{ score }} / {{ total }}</h2>
+{% block title %}Game Over · AminoMatcher{% endblock %}
 
-    <!-- Play again with SAME mode + question type -->
+{% block content %}
+
+<h2 class="game-over">Game Over</h2>
+
+<div class="score-box">
+    Your score: {{ score }} / {{ total }}
+</div>
+
+<div class="game-over-buttons">
     <a class="btn" href="/restart_same">Play again (same settings)</a>
+    <a class="btn" href="/modes">Change game settings</a>
+    <a class="btn" href="/">Go back to start page</a>
+</div>
 
-    <!-- Go back to mode selection -->
-    <a class="btn btn-secondary" href="/modes">Change game settings</a>
-
-    <!-- Go back to start page -->
-    <a class="btn btn-start" href="/">Go back to start page</a>
-
-</body>
-</html>
-
+{% endblock %}

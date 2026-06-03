@@ -1,21 +1,49 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Pick question type</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-    <h1>Pick question type</h1>
+{% block title %}Choose Question Type · AminoMatcher{% endblock %}
 
-    <a href="/start/{{ mode }}/random">Random</a><br><br>
-    <a href="/start/{{ mode }}/name_to_one">Name → One‑letter</a><br><br>
-    <a href="/start/{{ mode }}/name_to_three">Name → Three‑letter</a><br><br>
-    <a href="/start/{{ mode }}/name_to_property">Name → Property</a><br><br>
-    <a href="/start/{{ mode }}/name_to_formula">Name → Molecular formula</a><br><br>
-    <a href="/start/{{ mode }}/one_to_name">One‑letter → Name</a><br><br>
-    <a href="/start/{{ mode }}/three_to_name">Three‑letter → Name</a><br><br>
-    <a href="/start/{{ mode }}/free_input">Write-the-answer mode</a>
+{% block content %}
 
-</body>
-</html>
+<h2>Choose question type</h2>
+
+<div class="mode-box">
+    <a class="btn" href="/start/{{ mode }}/random">Random</a>
+    <p class="mode-desc">Mix of all question types.</p>
+</div>
+
+<div class="mode-box">
+    <a class="btn" href="/start/{{ mode }}/name_to_one">Name → One‑letter</a>
+    <p class="mode-desc">Given the amino acid name, choose the one‑letter code.</p>
+</div>
+
+<div class="mode-box">
+    <a class="btn" href="/start/{{ mode }}/name_to_three">Name → Three‑letter</a>
+    <p class="mode-desc">Given the amino acid name, choose the three‑letter code.</p>
+</div>
+
+<div class="mode-box">
+    <a class="btn" href="/start/{{ mode }}/name_to_property">Name → Property</a>
+    <p class="mode-desc">Identify the amino acid’s chemical property.</p>
+</div>
+
+<div class="mode-box">
+    <a class="btn" href="/start/{{ mode }}/name_to_formula">Name → Molecular formula</a>
+    <p class="mode-desc">Pick the correct molecular formula.</p>
+</div>
+
+<div class="mode-box">
+    <a class="btn" href="/start/{{ mode }}/one_to_name">One‑letter → Name</a>
+    <p class="mode-desc">Given the one‑letter code, choose the amino acid name.</p>
+</div>
+
+<div class="mode-box">
+    <a class="btn" href="/start/{{ mode }}/three_to_name">Three‑letter → Name</a>
+    <p class="mode-desc">Given the three‑letter code, choose the amino acid name.</p>
+</div>
+
+<div class="mode-box">
+    <a class="btn" href="/start/{{ mode }}/free_input">Write‑the‑answer mode</a>
+    <p class="mode-desc">Type the answer yourself. Regex‑validated.</p>
+</div>
+
+{% endblock %}

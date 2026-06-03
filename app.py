@@ -241,8 +241,10 @@ def answer():
     if choice.lower() == correct.lower():
         session["score"] += 1
         feedback = "Correct!"
+        color_class = "correct"
     else:
         feedback = f"Wrong! The correct answer was {correct}"
+        color_class = "#wrong"
 
         # Survival mode → stop immediately
         if session.get("survival"):
@@ -259,7 +261,8 @@ def answer():
     return render_template(
         "answer.html",
         feedback=feedback,
-        score=session["score"]
+        score=session["score"],
+        color_class=color_class
     )
 @app.route("/game_over")
 def game_over():

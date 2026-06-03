@@ -1,43 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>AminoMatcher</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 40px auto;
-            text-align: center;
-        }
-        .btn {
-            display: block;
-            width: 250px;
-            margin: 15px auto;
-            padding: 14px;
-            font-size: 18px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-        }
-        .btn:hover {
-            background-color: #45a049;
-        }
-    </style>
-</head>
-<body>
+{% extends "base.html" %}
 
-    <h1>Welcome to AminoMatcher</h1>
+{% block title %}AminoMatcher · Home{% endblock %}
 
-    <p>
-        This is a learning game to train aminoacids. You can now choose to start the quiz or go to the aminoacid list. 
-        The list includes the name of the aminoacid, its one letter abbreviation, its three letter abbreviation, its molecular formula and its property.
-        Otherwise you can start the game, where you first pick a mode, then a question type and then the quiz starts.
-    </p>
+{% block content %}
 
-    <a class="btn" href="/modes">Start quiz</a>
-    <a class="btn" href="/aminoacids">Aminoacid list</a>
+<h2>Welcome to AminoMatcher</h2>
 
-</body>
-</html>
+<p class="tagline">Learn amino acids the fun way</p>
+
+<p>
+    AminoMatcher is a learning game designed to help you practice amino acids 
+    and their properties. You can start a quiz, or explore the full amino acid list 
+    including names, one‑letter codes, three‑letter codes, molecular formulas, 
+    and properties.
+</p>
+
+<a class="btn" href="/modes">Start quiz</a>
+<a class="btn" href="/aminoacids">Amino acid list</a>
+
+{% endblock %}

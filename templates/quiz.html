@@ -1,84 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>AminoMatcher Quiz</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 40px auto;
-            text-align: center;
-        }
-        .option-btn {
-            display: block;
-            width: 200px;
-            margin: 10px auto;
-            padding: 12px;
-            font-size: 18px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 8px;
-        }
-        .option-btn:hover {
-            background-color: #45a049;
-        }
-        .input-field {
-            width: 250px;
-            padding: 10px;
-            font-size: 18px;
-            margin-top: 20px;
-        }
-        .submit-btn {
-            margin-top: 20px;
-            padding: 12px 20px;
-            font-size: 18px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        .submit-btn:hover {
-            background-color: #45a049;
-        }
-    </style>
-</head>
-<body>
+{% extends "base.html" %}
 
-    <h1>AminoMatcher Quiz</h1>
+{% block title %}Quiz · AminoMatcher{% endblock %}
 
-    <h2>{{ question_text }}</h2>
+{% block content %}
 
-    {% if error %}
-        <p style="color: red; font-weight: bold;">{{ error }}</p>
+<h2>{{ question_text }}</h2>
+
+{% if error %}
+    <p class="error">{{ error }}</p>
+{% endif %}
+
+<form action="/answer" method="POST">
+
+    {% if options %}
+        {# --- MULTIPLE CHOICE MODE --- #}
+        {% for opt in options %}
+            <button class="btn" name="choice" value="{{ opt }}">
+                {{ opt }}
+            </button>
+        {% endfor %}
+
+    {% else %}
+        {# --- FREE INPUT MODE --- #}
+        <input class="input-field" type="text" name="choice" placeholder="Type your answer">
+        <br>
+        <button class="btn" type="submit">Submit</button>
     {% endif %}
 
+    <input type="hidden" name="correct" value="{{ correct_answer }}">
+</form>
 
-    <form action="/answer" method="POST">
+<div class="score-box">
+    Question {{ question }} / {{ total }}  
+    <br>
+    Score: {{ score }}
+</div>
 
-        {% if options %}
-            {# --- MULTIPLE CHOICE MODE --- #}
-            {% for opt in options %}
-                <button class="option-btn" name="choice" value="{{ opt }}">
-                    {{ opt }}
-                </button>
-            {% endfor %}
-
-        {% else %}
-            {# --- FREE INPUT MODE --- #}
-            <input class="input-field" type="text" name="choice" placeholder="Type your answer">
-            <br>
-            <button class="submit-btn" type="submit">Submit</button>
-        {% endif %}
-
-        <input type="hidden" name="correct" value="{{ correct_answer }}">
-    </form>
-
-    <p>Question {{ question }} / {{ total }}</p>
-    <p>Score: {{ score }}</p>
-
-</body>
-</html>
+{% endblock %}

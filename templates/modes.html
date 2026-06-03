@@ -1,17 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Pick Game Mode</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-    <h1>Pick amount of question</h1>
+{% block title %}Choose Game Mode · AminoMatcher{% endblock %}
 
-    <a href="/choose_type/10">10 questions</a><br><br>
-    <a href="/choose_type/20">20 questions</a><br><br>
-    <a href="/choose_type/survival">Survival mode</a>
+{% block content %}
 
-</body>
-</html>
+<h2>Choose number of questions</h2>
 
+<div class="mode-box">
+    <a class="btn" href="/choose_type/10">10 questions</a>
+    <p class="mode-desc">A short warm‑up session. Perfect for quick practice.</p>
+</div>
+
+<div class="mode-box">
+    <a class="btn" href="/choose_type/20">20 questions</a>
+    <p class="mode-desc">A longer challenge to test your amino acid knowledge.</p>
+</div>
+
+<div class="mode-box">
+    <a class="btn" href="/choose_type/survival">Survival mode</a>
+    <p class="mode-desc">One mistake and you're out. How long can you survive?</p>
+</div>
+
+{% endblock %}
