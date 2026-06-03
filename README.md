@@ -55,7 +55,13 @@ SET search_path TO public;
 ```
 Then run sql file in your preferred SQL tool
 
-6. Change database login in app.py
+6. Run import_csv.py
+
+```bash
+python import_csv.py
+```
+
+7. Change database login in app.py
 ```python
 def get_db_connection():
     conn = psycopg2.connect(
@@ -68,10 +74,16 @@ def get_db_connection():
 ```
 Password is only necessary when you have a password in your postgres setup, when using Postgres.app on macOS there usually is no need for a password.
 
-7. Run the Flask app:
+8. Run app.py
+
+```bash
+python app.py
+```
+
+9. Run the Flask app:
 
 ```bash
 flask run --debug
 ```
 
-8. Open the game in your webbrowser 
+10. Open the game in your webbrowser 

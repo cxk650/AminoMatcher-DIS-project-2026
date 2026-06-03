@@ -22,7 +22,7 @@ CREATE TABLE aminoacid (
     molecular_formula VARCHAR(100) NOT NULL,
     property VARCHAR(100)
 );
-ALTER TABLE aminoacid ADD COLUMN image_filename TEXT;
+ALTER TABLE aminoacid ADD COLUMN image_filename VARCHAR(100);
 
 -- 3) Question
 CREATE TABLE question (

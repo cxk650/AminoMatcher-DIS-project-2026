@@ -294,7 +294,7 @@ def answer():
 
     # Amino acid name (Alanine, Lysine, ...)
     else:
-        valid = re.fullmatch(r"[A-Za-z]+", choice)
+        valid = re.fullmatch(r"[A-Za-z ]+", choice)
 
     # --- HANDLE REGEX FAIL ---
     if not valid:
