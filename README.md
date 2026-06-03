@@ -35,7 +35,7 @@ Windows:
 
 Mac/Linux:
 ```bash
-source . venv/bin/activate
+source .venv/bin/activate
 ```
 
 4. Install dependencies:
