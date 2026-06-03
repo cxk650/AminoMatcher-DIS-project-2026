@@ -56,5 +56,3 @@ CREATE TABLE gamesession (
         REFERENCES gamemode(mode_id)
         ON DELETE RESTRICT
 );
-
-SELECT * FROM aminoacid LIMIT 5;

@@ -10,7 +10,7 @@ def get_db_connection():
         host="localhost",
         database="postgres",   # fordi dine tabeller ligger i postgres/public
         user="postgres",
-        password="qbq52yex"
+        #password="" kun hvis nødvendigt
     )
     return conn
 
