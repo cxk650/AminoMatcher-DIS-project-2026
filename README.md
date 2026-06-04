@@ -15,6 +15,7 @@ It's purpose is to help students memories Amino acids and their properties.
 
 1. Clone the repository:
 
+First navigate to where you want the repository.
 In VScode write in terminal:
 
 ```bash
