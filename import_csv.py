@@ -1,26 +1,22 @@
 import csv
-import psycopg2
+import sqlite3
 
-conn = psycopg2.connect(
-    host="localhost",
-    database="postgres",
-    user="postgres",
-    password="qbq52yex"
-)
+conn = sqlite3.connect("aminomatcher.db")
 cur = conn.cursor()
 
 with open('aminoacids.csv', newline='', encoding='utf-8-sig') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
         cur.execute("""
-            INSERT INTO aminoacid (name, one_letter_abbr, three_letter_abbr, molecular_formula, property, image_filename)
-            VALUES (%s, %s, %s, %s, %s, %s)
+            INSERT INTO aminoacid 
+            (name, one_letter_abbr, three_letter_abbr, molecular_formula, property, image_filename)
+            VALUES (?, ?, ?, ?, ?, ?)
         """, (
             row['Name'],
             row['Letter'],
             row['Abbr'],
             row['Molecular Formula'],
-            row['property'],  # eller 'property' afhængigt af din CSV
+            row['property'],
             row['image_filename']
         ))
 

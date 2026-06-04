@@ -1,18 +1,16 @@
-import psycopg2
 from flask import Flask, render_template
 import random
 
 app = Flask(__name__)
 app.secret_key = "noget_meget_sikkert"
 
+import sqlite3
+
 def get_db_connection():
-    conn = psycopg2.connect(
-        host="localhost",
-        database="postgres",   # fordi dine tabeller ligger i postgres/public
-        user="postgres",
-        #password="" kun hvis nødvendigt
-    )
+    conn = sqlite3.connect("aminomatcher.db")
+    conn.row_factory = sqlite3.Row
     return conn
+
 
 @app.route("/")
 def home():
