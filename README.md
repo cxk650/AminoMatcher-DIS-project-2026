@@ -54,9 +54,16 @@ pip install -r requirements.txt
 Only necessary first time
 Make sure you're in /AminoMatcher-DIS-project-2026
 
+Windows:
+```bash
+python -c "import sqlite3; conn = sqlite3.connect('aminomatcher.db'); conn.executescript(open('schema.sql', encoding='utf-8').read()); conn.close()"
+```
+
+Mac/Linux:
 ```bash
 sqlite3 aminomatcher.db < schema.sql
 ```
+
 6. Run import_csv.py 
 
 Only necessary first time
