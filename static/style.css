@@ -1,0 +1,235 @@
+/* --- GLOBAL BIOTECH LOOK --- */
+
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    background: linear-gradient(135deg, #e8f7f1, #dff3ff);
+    color: #1a2a33;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* --- HEADER --- */
+
+header {
+    background: #0b7a75;
+    padding: 20px 0;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 32px;
+    letter-spacing: 1px;
+}
+
+/* --- FOOTER --- */
+
+footer {
+    margin-top: 40px;
+    padding: 15px 0;
+    font-size: 14px;
+    color: #0b7a75;
+}
+
+/* --- MAIN CONTAINER --- */
+
+.container {
+    max-width: 1000px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* --- BUTTONS --- */
+
+button, .btn {
+    background: #0b7a75;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 10px;
+    transition: 0.2s ease;
+}
+
+button:hover, .btn:hover {
+    background: #0e948d;
+    transform: translateY(-2px);
+}
+
+/* --- INPUT FIELDS --- */
+
+input[type="text"] {
+    width: 80%;
+    padding: 12px;
+    font-size: 18px;
+    border: 2px solid #0b7a75;
+    border-radius: 8px;
+    margin-top: 15px;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #0e948d;
+    box-shadow: 0 0 8px rgba(14,148,141,0.3);
+}
+
+/* --- ERROR MESSAGE --- */
+
+.error {
+    color: #d9534f;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* --- SCORE DISPLAY --- */
+
+.score-box {
+    background: #e6faf7;
+    border-left: 5px solid #0b7a75;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+/* --- GAME OVER --- */
+
+.game-over {
+    font-size: 36px;
+    color: #d9534f;
+    margin-bottom: 20px;
+}
+
+.mode-box {
+    margin-bottom: 35px;
+}
+
+.mode-desc {
+    font-size: 15px;
+    color: #0b7a75;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+
+.tagline {
+    font-size: 18px;
+    color: #0b7a75;
+    font-weight: 500;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+.game-over {
+    font-size: 36px;
+    color: #d9534f;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Game Over button spacing */
+.btn {
+    width: 100%;
+    max-width: 300px;
+    margin: 12px auto;
+    display: block;
+}
+
+.game-over-buttons {
+    margin-top: 20px;
+}
+
+.feedback-text {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* --- TABEL LAYOUT --- */
+.amino-table {
+    width: 100%;
+    max-width: 950px;   /* bredere så alt kan stå på én linje */
+    margin: 0 auto;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+/* --- CELLESTYLING --- */
+.amino-table th,
+.amino-table td {
+    padding: 6px 8px;
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;   /* vigtig: forhindrer linjeskift */
+}
+
+/* --- ZEBRA STRIPES + HOVER --- */
+.amino-table tr:nth-child(even) {
+    background: #f4fbfa;
+}
+
+.amino-table tr:hover {
+    background: #e6faf7;
+}
+
+/* --- BILLEDER --- */
+.amino-img {
+    width: 14px;      /* mindre billeder = mere plads til tekst */
+    height: 14px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
+
+/* --- KORREKT KOLONNEBREDDER --- */
+/* Kolonne 1 = Name */
+.amino-table th:nth-child(1),
+.amino-table td:nth-child(1) {
+    width: 180px;   /* lidt bredere så navne ikke brydes */
+}
+
+/* Kolonne 2 + 3 = 1-letter og 3-letter */
+.amino-table th:nth-child(2),
+.amino-table td:nth-child(2),
+.amino-table th:nth-child(3),
+.amino-table td:nth-child(3) {
+    width: 70px;    /* nok plads til overskrifterne */
+    text-align: center;
+}
+
+/* Kolonne 4 = Image */
+.amino-table th:nth-child(4),
+.amino-table td:nth-child(4) {
+    width: 35px;
+    text-align: center;
+}
+
+/* Kolonne 5 = Molecular formula */
+.amino-table th:nth-child(5),
+.amino-table td:nth-child(5) {
+    width: 130px;
+}
+
+/* Kolonne 6 = Property */
+.amino-table th:nth-child(6),
+.amino-table td:nth-child(6) {
+    width: 110px;
+}
+
+/* --- FEEDBACK FARVER --- */
+.correct {
+    color: #0b7a75;
+}
+
+.wrong {
+    color: #d9534f;
+}

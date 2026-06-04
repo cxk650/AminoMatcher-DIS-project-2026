@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Game Over · AminoMatcher{% endblock %}
+
+{% block content %}
+
+<h2 class="game-over">Game Over</h2>
+
+<div class="score-box">
+    Your score: {{ score }} / {{ total }}
+</div>
+
+<div class="game-over-buttons">
+    <a class="btn" href="/restart_same">Play again (same settings)</a>
+    <a class="btn" href="/modes">Change game settings</a>
+    <a class="btn" href="/">Go back to start page</a>
+</div>
+
+{% endblock %}
