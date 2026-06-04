@@ -50,7 +50,7 @@ Only necessary first time
 Make sure you're in /AminoMatcher-DIS-project-2026
 
 ```bash
-sqlite3 /aminomatcher.db < schema.sql
+sqlite3 aminomatcher.db < schema.sql
 ```
 6. Run import_csv.py 
 
