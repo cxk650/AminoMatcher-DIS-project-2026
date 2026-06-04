@@ -15,6 +15,8 @@ It's purpose is to help students memories Amino acids and their properties.
 
 1. Clone the repository:
 
+In VScode write in terminal:
+
 ```bash
 git clone <repository-url>
 cd AminoMatcher-DIS-project-2026
