@@ -23,6 +23,8 @@ git clone <repository-url>
 cd AminoMatcher-DIS-project-2026
 ```
 
+Open folder in VScode
+
 2. Create virtual environment:
 
 ```bash
