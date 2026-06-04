@@ -17,7 +17,7 @@ It's purpose is to help students memories Amino acids and their properties.
 
 ```bash
 git clone <repository-url>
-cd AminoMatcher
+cd AminoMatcher-DIS-project-2026
 ```
 
 2. Create virtual environment:

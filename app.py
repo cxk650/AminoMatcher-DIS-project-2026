@@ -123,7 +123,9 @@ def generate_question():
     elif q_type == "name_to_property":
         question = f"Which property does {correct[0]} have?"
         correct_answer = correct[4]
-        choices = [correct[4]] + [w[4] for w in wrong]
+        choices = ["hydrophobe", "hydrophile", "positive", "negative"]
+        random.shuffle(choices)
+
 
     elif q_type == "name_to_formula":
         question = f"What is the molecular formula for {correct[0]}?"
@@ -313,7 +315,7 @@ def answer():
             error=feedback
         )
 
-    # --- NORMAL ANSWER CHECK ---
+# --- NORMAL ANSWER CHECK ---
     if choice.lower() == correct.lower():
         session["score"] += 1
         feedback = "Correct!"
@@ -325,6 +327,9 @@ def answer():
         if session.get("survival"):
             return redirect("/game_over")
 
+    # Gem elevens svar
+    session["last_user_answer"] = choice
+
     # Increment question counter
     session["question"] += 1
 
@@ -335,8 +340,14 @@ def answer():
         "answer.html",
         feedback=feedback,
         score=session["score"],
-        color_class=color_class
+        color_class=color_class,
+        question_text=session["last_question_text"],
+        user_answer=choice,
+        correct_answer=correct,
+        is_correct=(choice.lower() == correct.lower())
     )
+
+
 
 @app.route("/game_over")
 def game_over():

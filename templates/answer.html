@@ -3,10 +3,18 @@
 {% block title %}Answer · AminoMatcher{% endblock %}
 
 {% block content %}
-
 <h2 class="feedback-text {{ color_class }}">
     {{ feedback }}
 </h2>
+
+<div class="answer-summary">
+    <p><strong>Question:</strong> {{ question_text }}</p>
+    <p><strong>Your answer:</strong> {{ user_answer }}</p>
+
+    {% if not is_correct %}
+        <p><strong>Correct answer:</strong> {{ correct_answer }}</p>
+    {% endif %}
+</div>
 
 <div class="score-box">
     Score: {{ score }}
