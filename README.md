@@ -44,16 +44,31 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-5. Run app.py
+5. Run schema.sql
+
+Only necessary first time
+Make sure you're in /AminoMatcher-DIS-project-2026 
+
+```bash
+aminomatcher.db < /sql/schema.sql
+```
+6. Run import_csv.py 
+
+Only necessary first time
+```bash
+python import_csv.py
+```
+
+7. Run app.py
 
 ```bash
 python app.py
 ```
 
-6. Run the Flask app:
+8. Run the Flask app:
 
 ```bash
 flask run --debug
 ```
 
-7. Open the game in your webbrowser 
+9. Open the game in your webbrowser 
