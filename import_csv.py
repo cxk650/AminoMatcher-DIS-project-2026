@@ -24,4 +24,4 @@ conn.commit()
 cur.close()
 conn.close()
 
-print("CSV-data er nu indlæst i aminoacid-tabellen.")
+print("CSV-data is now loaded in the aminoacid-tabel.")
